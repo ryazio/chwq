@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Question from "./components/Question";
 
 export default function VerticalTabs() {
   const [selectedTab, setSelectedTab] = useState(1); // Default selected tab
@@ -8,11 +9,13 @@ export default function VerticalTabs() {
   const [code, setCode] = useState(""); // Track input code
 
   const lessons = Array.from({ length: 10 }, (_, i) => `Lesson ${i + 1}`);
-  const questions = [
-    { id: 1, question: "What is JavaScript?", codeSnippet: "" },
-    { id: 2, question: "What is React?", codeSnippet: "" },
-    { id: 3, question: "What is Tailwind CSS?", codeSnippet: "" },
-  ];
+  const questions = {
+    1: [
+      { id: 1, title: "List Mania!", imageUrl: "/3.png", codeSnippet: "" },
+      { id: 2, title: "Loopity Loops!", imageUrl: "/2.png", codeSnippet: "" },
+      { id: 3, title: "Strike of Counters!", imageUrl: "/1.png", codeSnippet: "" },
+    ]
+  };
 
   const handleCodeSubmit = () => {
     alert(`Submitted code for question: ${questions[selectedCard - 1].question}\nCode: ${code}`);
@@ -20,42 +23,42 @@ export default function VerticalTabs() {
   };
 
   return (
-    <div className="h-screen bg-black flex items-center justify-center">
-      {/* Container */}
-      <div className="flex bg-gray-800 text-white rounded-lg shadow-lg">
-        {/* Sidebar with Vertical Tabs */}
-        <div className="w-48 border-r border-gray-700">
+    <div className="h-screen bg-black flex items-center justify-center items-start">
+      <div className="flex flex-row justify-between w-[90%] items-start">
+        {/* Sidebar with Vertical Tabs (only visible on larger screens) */}
+        <div className="bg-[#1E1E1E] text-white border-r border-gray-700 pt-[15px] pb-[15px] mr-[20px] rounded-[15px] w-full md:w-[20%] hidden md:block">
           {lessons.map((lesson, index) => (
             <button
               key={index}
               onClick={() => setSelectedTab(index + 1)}
-              className={`w-full py-4 px-6 text-left transition ${
+              className={`w-full py-4 px-6 text-left transition flex flex-row justify-between tab-button ${
                 selectedTab === index + 1
-                  ? "bg-gray-600 font-bold"
-                  : "bg-gray-800 hover:bg-gray-700"
+                  ? "bg-white text-black font-bold"
+                  : "bg-[#1E1E1E] hover:bg-gray-700"
               }`}
             >
               {lesson}
+              {/* Pill with spacing between lesson text */}
+              <span className="inline-block px-3 py-1 bg-blue-500 text-white rounded-full text-xs ml-4">
+                Hello
+              </span>
             </button>
           ))}
         </div>
-
+      {/* Container */}
+      <div className="flex flex-col md:flex-row text-white rounded-lg shadow-lg w-full max-w-screen-xl">
         {/* Main Content Area */}
-        <div className="p-8 flex-1">
-          <h1 className="text-2xl font-bold mb-6">{`Content for Lesson ${selectedTab}`}</h1>
-
+        <div className="p-8 bg-[#1E1E1E] rounded-[15px] flex-1 w-full md:w-[60%] sm:w-[95%]">
+          <h1 className="text-2xl text-center font-bold mb-3">{`Content for Lesson ${selectedTab}`}</h1>
+          <div className="w-[100%] border-b-[1px] border-opacity-10 border-white mb-3"></div>
           {/* If no question is selected, show the list of questions */}
           {!selectedCard && (
-            <div className="grid grid-cols-1 gap-6 mb-6">
-              {questions.map((question) => (
-                <div
-                  key={question.id}
-                  className="bg-gray-700 p-4 rounded-lg cursor-pointer hover:bg-gray-600 transition"
-                  onClick={() => setSelectedCard(question.id)}
-                >
-                  <h2 className="font-bold text-lg">{`Question ${question.id}: ${question.question}`}</h2>
-                </div>
-              ))}
+            <div className="grid grid-cols-3 gap-6 mb-6 justify-center items-center">
+              {questions[selectedTab] ? questions[selectedTab].map((question) => (
+                <span key={question.id} onClick={() => setSelectedCard(question.id)}>
+                  <Question title={question.title} imageUrl={question.imageUrl}/>                
+                </span>
+              )): ""}
             </div>
           )}
 
@@ -68,7 +71,7 @@ export default function VerticalTabs() {
               >
                 &lt; Back to Questions List
               </button>
-              <h2 className="text-xl font-bold mb-4">{`Question: ${questions[selectedCard - 1].question}`}</h2>
+              {/* <h2 className="text-xl font-bold mb-4">{`Question: ${questions[selectedCard - 1].question}`}</h2>
 
               <textarea
                 value={code}
@@ -83,10 +86,28 @@ export default function VerticalTabs() {
                 className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition"
               >
                 Submit Code
-              </button>
+              </button> */}
             </div>
           )}
         </div>
+      </div>
+
+      {/* Dropdown Tab Navigation on mobile only - Moved to the top */}
+      <div className="fixed top-0 left-0 right-0 bg-[#1E1E1E] py-4 px-6 md:hidden">
+        <label htmlFor="lesson-dropdown" className="text-white text-sm mb-2 block">Select a Lesson:</label>
+        <select
+          id="lesson-dropdown"
+          className="w-full bg-[#2D2D2D] text-white border-2 border-gray-700 rounded-lg py-2 px-4"
+          value={selectedTab}
+          onChange={(e) => setSelectedTab(Number(e.target.value))}
+        >
+          {lessons.map((lesson, index) => (
+            <option key={index} value={index + 1}>
+              {lesson}
+            </option>
+          ))}
+        </select>
+      </div>
       </div>
     </div>
   );
