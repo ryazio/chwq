@@ -2,6 +2,10 @@
 
 import { useState } from "react";
 import Question from "./components/Question";
+import Image from "next/image";
+import  StrikerIcon  from "../app/assets/icons/strikerIcon.png";
+import PenguinSoldier from "../app/assets/images/penguin_soldier.png"
+import DocsIcon from "../app/assets/icons/docsIcon.png"
 
 export default function VerticalTabs() {
   const [selectedTab, setSelectedTab] = useState(1); // Default selected tab
@@ -13,20 +17,29 @@ export default function VerticalTabs() {
     1: [
       { id: 1, title: "List Mania!", imageUrl: "/3.png", codeSnippet: "" },
       { id: 2, title: "Loopity Loops!", imageUrl: "/2.png", codeSnippet: "" },
-      { id: 3, title: "Strike of Counters!", imageUrl: "/1.png", codeSnippet: "" },
-    ]
+      {
+        id: 3,
+        title: "Strike of Counters!",
+        imageUrl: "/1.png",
+        codeSnippet: "",
+      },
+    ],
   };
 
   const handleCodeSubmit = () => {
-    alert(`Submitted code for question: ${questions[selectedCard - 1].question}\nCode: ${code}`);
+    alert(
+      `Submitted code for question: ${
+        questions[selectedCard - 1].question
+      }\nCode: ${code}`
+    );
     setCode(""); // Clear the code input after submission
   };
 
   return (
-    <div className="h-screen bg-black flex items-center justify-center items-start">
-      <div className="flex flex-row justify-between w-[90%] items-start">
+    <div className="h-screen bg-black flex gap-y-2.5 items-center justify-center mx-auto px-4 max-w-screen-2xl">
+      <div className="flex flex-row justify-between lg:w-[90%] items-start">
         {/* Sidebar with Vertical Tabs (only visible on larger screens) */}
-        <div className="bg-[#1E1E1E] text-white border-r border-gray-700 pt-[15px] pb-[15px] mr-[20px] rounded-[15px] w-full md:w-[20%] hidden md:block">
+        <div className="bg-[#1E1E1E] text-white pt-[15px] pb-[15px] mr-[20px] rounded-[15px] w-full md:w-[20%] hidden md:block min-w-fit">
           {lessons.map((lesson, index) => (
             <button
               key={index}
@@ -39,75 +52,102 @@ export default function VerticalTabs() {
             >
               {lesson}
               {/* Pill with spacing between lesson text */}
-              <span className="inline-block px-3 py-1 bg-blue-500 text-white rounded-full text-xs ml-4">
-                Hello
-              </span>
+              {index === 0 && (
+                <span className="inline-block px-4 py-1 bg-[#EEFBE4] text-[#57C161] rounded-full text-xs ml-4">
+                  100 %
+                </span>
+              )}
             </button>
           ))}
         </div>
-      {/* Container */}
-      <div className="flex flex-col md:flex-row text-white rounded-lg shadow-lg w-full max-w-screen-xl">
-        {/* Main Content Area */}
-        <div className="p-8 bg-[#1E1E1E] rounded-[15px] flex-1 w-full md:w-[60%] sm:w-[95%]">
-          <h1 className="text-2xl text-center font-bold mb-3">{`Content for Lesson ${selectedTab}`}</h1>
-          <div className="w-[100%] border-b-[1px] border-opacity-10 border-white mb-3"></div>
-          {/* If no question is selected, show the list of questions */}
-          {!selectedCard && (
-            <div className="grid grid-cols-3 gap-6 mb-6 justify-center items-center">
-              {questions[selectedTab] ? questions[selectedTab].map((question) => (
-                <span key={question.id} onClick={() => setSelectedCard(question.id)}>
-                  <Question title={question.title} imageUrl={question.imageUrl}/>                
-                </span>
-              )): ""}
+        {/* Container */}
+        {!selectedCard && (
+          <div className="flex-1 flex-col mt-28 md:mt-0 md:flex-row flex text-white rounded-lg max-w-screen-2xl">
+            {/* Main Content Area */}
+
+            <div className="p-8 bg-[#1E1E1E] rounded-[15px] flex-1 w-full md:w-[60%] sm:w-[95%]">
+              <h1 className="text-2xl text-center font-bold mb-3">{`Content for Lesson ${selectedTab}`}</h1>
+              <div className="w-[100%] border-b-[1px] border-opacity-10 border-white mb-3"></div>
+              {/* If no question is selected, show the list of questions */}
+
+              <div className="flex flex-row mb-6 justify-around flex-wrap items-center">
+                {questions[selectedTab]
+                  ? questions[selectedTab].map((question) => (
+                      <span
+                        className="justify-self-center"
+                        key={question.id}
+                        onClick={() => setSelectedCard(question.id)}
+                      >
+                        <Question
+                          title={question.title}
+                          imageUrl={question.imageUrl}
+                        />
+                      </span>
+                    ))
+                  : ""}
+              </div>
             </div>
-          )}
-
-          {/* If a question is selected, show the question details */}
-          {selectedCard && (
-            <div className="bg-gray-900 p-6 rounded-lg mt-6">
-              <button
-                onClick={() => setSelectedCard(null)}
-                className="text-blue-500 hover:text-blue-300 mb-4 inline-block"
-              >
-                &lt; Back to Questions List
-              </button>
-              {/* <h2 className="text-xl font-bold mb-4">{`Question: ${questions[selectedCard - 1].question}`}</h2>
-
-              <textarea
-                value={code}
-                onChange={(e) => setCode(e.target.value)}
-                rows="6"
-                className="w-full p-4 bg-gray-800 text-white rounded-lg mb-4"
-                placeholder="Write your code here..."
-              ></textarea>
-
-              <button
-                onClick={handleCodeSubmit}
-                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition"
-              >
-                Submit Code
-              </button> */}
+          </div>
+        )}
+        {selectedCard && (
+          <div className="w-full"><div className="w-full text-[18px] font-[390] text-[#666666] mb-2">
+            Lesson 2 / Loopity Loops
+          </div>
+          <div className="flex-1 flex-col mt-28 md:mt-0 md:flex-row flex text-white rounded-lg max-w-screen-2xl">
+          <div className="px-4 md:px-8 py-2 bg-[#1E1E1E] rounded-[15px] flex-1 w-full md:w-[60%] sm:w-[95%]">
+            <div className="flex flex-row">
+              <div className="sm:flex-none">
+                <Image src={StrikerIcon} alt="Striker"/>
+              </div>
+              <div className="flex flex-col gap-y-2.5">
+                <span className="text-[14px] font-semibold text-[#ffffff]">Strike of Counters! - Counting the Penguin Soldiers!!</span>
+                <div className="flex flex-col gap-4 px-8 py-4 bg-[#FFFFFF1A] rounded-[15px] max-w-[534]">
+                  <span className="text-[14px] font-[390] leading-6 text-[#ffffff]">The Penguin Army is getting ready for a big march! Captain Flippers needs to count all the brave penguin soldiers before they head out. But with so many penguins waddling around, it's hard to keep track. Can you help Captain Flippers count the soldiers so they can start their journey?
+                  Write a Python program that counts the number of penguins from 1 to 10. Then, after the mission, count them again from 10 back down to 1 to make sure no one is left behind.</span>
+                  <Image src={PenguinSoldier} alt="Penguin Soldier" />
+                </div>
+                <div className="flex gap-2">
+                <button className="py-2 px-4 bg-[#FFFFFF1A] rounded-[15px] gap-1 transition flex flex-row justify-between tab-button text-[14px] font-semibold">
+                  <Image src={DocsIcon} alt="docs Icon"/>
+                  <span>Docs</span>
+                </button>
+                <button className="py-2 px-4 bg-[#FFFFFF1A] rounded-[15px] gap-1 transition flex flex-row justify-between tab-button text-[14px] font-semibold text-[#FFFFFF80]">
+                  <Image src={DocsIcon} alt="Hints Icon"/>
+                  <span>Hints</span>
+                </button>
+                <button className="py-2 px-4 bg-[#FFFFFF1A] rounded-[15px] gap-1 transition flex flex-row justify-between tab-button text-[14px] font-semibold text-[#FFFFFF80]">
+                  <Image src={DocsIcon} alt="Help Icon"/>
+                  <span>Help</span>
+                </button>
+                </div>
+              </div>
             </div>
-          )}
+          </div>
+            </div>
+          </div>
+        )}
+
+        {/* Dropdown Tab Navigation on mobile only - Moved to the top */}
+        <div className="fixed top-0 left-0 right-0 bg-[#1E1E1E] py-4 px-6 md:hidden">
+          <label
+            htmlFor="lesson-dropdown"
+            className="text-white text-sm mb-2 block"
+          >
+            Select a Lesson:
+          </label>
+          <select
+            id="lesson-dropdown"
+            className="w-full bg-[#2D2D2D] text-white border-2 border-gray-700 rounded-lg py-2 px-4"
+            value={selectedTab}
+            onChange={(e) => setSelectedTab(Number(e.target.value))}
+          >
+            {lessons.map((lesson, index) => (
+              <option key={index} value={index + 1}>
+                {lesson}
+              </option>
+            ))}
+          </select>
         </div>
-      </div>
-
-      {/* Dropdown Tab Navigation on mobile only - Moved to the top */}
-      <div className="fixed top-0 left-0 right-0 bg-[#1E1E1E] py-4 px-6 md:hidden">
-        <label htmlFor="lesson-dropdown" className="text-white text-sm mb-2 block">Select a Lesson:</label>
-        <select
-          id="lesson-dropdown"
-          className="w-full bg-[#2D2D2D] text-white border-2 border-gray-700 rounded-lg py-2 px-4"
-          value={selectedTab}
-          onChange={(e) => setSelectedTab(Number(e.target.value))}
-        >
-          {lessons.map((lesson, index) => (
-            <option key={index} value={index + 1}>
-              {lesson}
-            </option>
-          ))}
-        </select>
-      </div>
       </div>
     </div>
   );
