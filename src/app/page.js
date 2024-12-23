@@ -36,7 +36,7 @@ export default function VerticalTabs() {
   };
 
   return (
-    <div className="h-screen bg-black flex gap-y-2.5 items-center justify-center mx-auto px-4 max-w-screen-2xl">
+    <div className="h-screen bg-black flex gap-y-2.5 items-center justify-center mx-auto px-4">
       <div className="flex flex-row justify-between lg:w-[90%] items-start">
         {/* Sidebar with Vertical Tabs (only visible on larger screens) */}
         <div className="bg-[#1E1E1E] text-white pt-[15px] pb-[15px] mr-[20px] rounded-[15px] w-full md:w-[20%] hidden md:block min-w-fit">
