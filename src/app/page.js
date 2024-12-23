@@ -23,6 +23,46 @@ export default function VerticalTabs() {
         imageUrl: "/1.png",
         codeSnippet: "",
       },
+      // { id: 4, title: "List Mania!", imageUrl: "/3.png", codeSnippet: "" },
+      // { id: 5, title: "Loopity Loops!", imageUrl: "/2.png", codeSnippet: "" },
+      // {
+      //   id: 6,
+      //   title: "Strike of Counters!",
+      //   imageUrl: "/1.png",
+      //   codeSnippet: "",
+      // },
+      //   { id: 7, title: "List Mania!", imageUrl: "/3.png", codeSnippet: "" },
+      //   { id: 8, title: "Loopity Loops!", imageUrl: "/2.png", codeSnippet: "" },
+      //   {
+      //     id: 9,
+      //     title: "Strike of Counters!",
+      //     imageUrl: "/1.png",
+      //     codeSnippet: "",
+      //   },
+      //   { id: 10, title: "List Mania!", imageUrl: "/3.png", codeSnippet: "" },
+      //   { id: 11, title: "Loopity Loops!", imageUrl: "/2.png", codeSnippet: "" },
+      //   {
+      //     id: 12,
+      //     title: "Strike of Counters!",
+      //     imageUrl: "/1.png",
+      //     codeSnippet: "",
+      //   },
+      //     { id: 13, title: "List Mania!", imageUrl: "/3.png", codeSnippet: "" },
+      //     { id: 14, title: "Loopity Loops!", imageUrl: "/2.png", codeSnippet: "" },
+      //     {
+      //       id: 15,
+      //       title: "Strike of Counters!",
+      //       imageUrl: "/1.png",
+      //       codeSnippet: "",
+      //     },
+      //     { id: 16, title: "List Mania!", imageUrl: "/3.png", codeSnippet: "" },
+      //     { id: 17, title: "Loopity Loops!", imageUrl: "/2.png", codeSnippet: "" },
+      //     {
+      //       id: 18,
+      //       title: "Strike of Counters!",
+      //       imageUrl: "/1.png",
+      //       codeSnippet: "",
+      //     },
     ],
   };
 
@@ -37,8 +77,10 @@ export default function VerticalTabs() {
 
   return (
     <div className="h-screen bg-black flex gap-y-2.5 items-center justify-center mx-auto px-4">
-      <div className="flex flex-row justify-between lg:w-[90%] items-start">
+      <div className="flex flex-row lg:w-[65%]">
         {/* Sidebar with Vertical Tabs (only visible on larger screens) */}
+        <div className="flex flex-row items-start">
+
         <div className="bg-[#1E1E1E] text-white pt-[15px] pb-[15px] mr-[20px] rounded-[15px] w-full md:w-[20%] hidden md:block min-w-fit">
           {lessons.map((lesson, index) => (
             <button
@@ -60,9 +102,10 @@ export default function VerticalTabs() {
             </button>
           ))}
         </div>
+        </div>
         {/* Container */}
         {!selectedCard && (
-          <div className="flex-1 flex-col mt-28 md:mt-0 md:flex-row flex text-white rounded-lg max-w-screen-2xl">
+          <div className="flex-1 flex-col mt-28 md:mt-0 md:flex-row flex text-white rounded-lg max-w-screen-xl">
             {/* Main Content Area */}
 
             <div className="p-8 bg-[#1E1E1E] rounded-[15px] flex-1 w-full md:w-[60%] sm:w-[95%]">
@@ -70,7 +113,7 @@ export default function VerticalTabs() {
               <div className="w-[100%] border-b-[1px] border-opacity-10 border-white mb-3"></div>
               {/* If no question is selected, show the list of questions */}
 
-              <div className="flex flex-row mb-6 justify-around flex-wrap items-center">
+              <div className="flex flex-row mb-6 justify-around flex-wrap justify-around items-center">
                 {questions[selectedTab]
                   ? questions[selectedTab].map((question) => (
                       <span
