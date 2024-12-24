@@ -1,6 +1,6 @@
 import LessonHeader from "./LessonHeader";
-import CardComponet from "./CardComponet";
-import Image from "next/image";  // Make sure to import Image from next/image
+import CardComponet from "./CardComponent";
+import Image from "next/image";
 
 const Test = ({profileImage, title, image, description}) => {
   return (

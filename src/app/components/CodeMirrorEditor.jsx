@@ -1,32 +1,42 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
-
-// Dynamically import CodeMirror with SSR disabled
+import { openAIService } from '@/Service/openai-service';
 const CodeMirror = dynamic(() => import('react-codemirror'), { ssr: false });
 
 const CodeMirrorEditor = () => {
   const editorRef = useRef(null);
-
+  const [code, setCode] = useState(`// Write your code here\n\n\n\n\n\n\n\n\n`);
   useEffect(() => {
-    import('codemirror/lib/codemirror.css');   // Importing core CSS
-    import('codemirror/theme/dracula.css');    // Importing theme
-    import('codemirror/mode/javascript/javascript.js'); // Importing JavaScript mode
+    import('codemirror/lib/codemirror.css');
+    import('codemirror/theme/dracula.css');
+    import('codemirror/mode/javascript/javascript.js');
   }, []);
 
-  // Initial value with 8 lines, the first line having a comment
-  const initialCode = `// Write your code here
-  \n\n\n\n\n\n\n\n\n
-  `;
-
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try{
+      const response = await openAIService.sendPrompt(code, question);
+      if (response){
+        alert(response);
+      }
+    } catch (error) {
+      alert(error);
+    }  
+  } 
   return (
-    <div>
+    <div className='relative'>
       <CodeMirror
         ref={editorRef}
-        value={initialCode}
+        value={code}
         options={{
           mode: 'javascript',
           theme: 'dracula',
           lineNumbers: true,
+        }}
+        onChange={(value) => {
+          const updatedCode = value;
+          setCode(updatedCode);
+          console.log('Updated code:', updatedCode);
         }}
       />
       <style jsx global>{`
@@ -46,6 +56,7 @@ const CodeMirrorEditor = () => {
           display: flex;
         }
       `}</style>
+      <button className='absolute bottom-3 right-4 z-[9999999]' type='submit' onClick={handleSubmit}>Submit</button>
     </div>
   );
 };

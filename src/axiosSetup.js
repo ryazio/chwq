@@ -9,3 +9,14 @@ export const axiosInstance = axios.create({
     Accept: 'application/json',
   },
 });
+
+axiosInstance.interceptors.request.use((config) => {
+    const token = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  });
+
+
+export default axiosInstance;

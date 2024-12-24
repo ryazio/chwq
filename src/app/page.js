@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Question from "./components/Question";
-import Image from "next/image";
 import Test from "./components/Test/Test";
 
 export default function VerticalTabs() {
@@ -21,46 +20,6 @@ export default function VerticalTabs() {
         imageUrl: "/1.png",
         codeSnippet: "",
       },
-      // { id: 4, title: "List Mania!", imageUrl: "/3.png", codeSnippet: "" },
-      // { id: 5, title: "Loopity Loops!", imageUrl: "/2.png", codeSnippet: "" },
-      // {
-      //   id: 6,
-      //   title: "Strike of Counters!",
-      //   imageUrl: "/1.png",
-      //   codeSnippet: "",
-      // },
-      //   { id: 7, title: "List Mania!", imageUrl: "/3.png", codeSnippet: "" },
-      //   { id: 8, title: "Loopity Loops!", imageUrl: "/2.png", codeSnippet: "" },
-      //   {
-      //     id: 9,
-      //     title: "Strike of Counters!",
-      //     imageUrl: "/1.png",
-      //     codeSnippet: "",
-      //   },
-      //   { id: 10, title: "List Mania!", imageUrl: "/3.png", codeSnippet: "" },
-      //   { id: 11, title: "Loopity Loops!", imageUrl: "/2.png", codeSnippet: "" },
-      //   {
-      //     id: 12,
-      //     title: "Strike of Counters!",
-      //     imageUrl: "/1.png",
-      //     codeSnippet: "",
-      //   },
-      //     { id: 13, title: "List Mania!", imageUrl: "/3.png", codeSnippet: "" },
-      //     { id: 14, title: "Loopity Loops!", imageUrl: "/2.png", codeSnippet: "" },
-      //     {
-      //       id: 15,
-      //       title: "Strike of Counters!",
-      //       imageUrl: "/1.png",
-      //       codeSnippet: "",
-      //     },
-      //     { id: 16, title: "List Mania!", imageUrl: "/3.png", codeSnippet: "" },
-      //     { id: 17, title: "Loopity Loops!", imageUrl: "/2.png", codeSnippet: "" },
-      //     {
-      //       id: 18,
-      //       title: "Strike of Counters!",
-      //       imageUrl: "/1.png",
-      //       codeSnippet: "",
-      //     },
     ],
   };
 
@@ -74,7 +33,7 @@ export default function VerticalTabs() {
   };
 
   return (
-    <div className="h-screen bg-black flex gap-y-2.5 items-center justify-center mx-auto px-4">
+    <div className="h-max bg-black flex pt-10 gap-y-2.5 items-center justify-center mx-auto px-4">
       <div className="flex flex-row lg:w-[65%]">
         {/* Sidebar with Vertical Tabs (only visible on larger screens) */}
         <div className="flex flex-row items-start">
@@ -93,7 +52,7 @@ export default function VerticalTabs() {
               {lesson}
               {/* Pill with spacing between lesson text */}
               {index === 0 && (
-                <span className="inline-block px-4 py-1 bg-[#EEFBE4] text-[#57C161] rounded-full text-xs ml-4">
+                <span className="inline-block px-4 py-1 bg-[#EEFBE4] text-[#57C161] rounded-full text-xs ml-4 min-w-[67]">
                   100 %
                 </span>
               )}
@@ -123,7 +82,9 @@ export default function VerticalTabs() {
                           title={question.title}
                           imageUrl={question.imageUrl}
                         />
+                        progress bar
                       </span>
+                      
                     ))
                   : ""}
               </div>
