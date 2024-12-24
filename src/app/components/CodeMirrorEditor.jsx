@@ -48,12 +48,12 @@ const CodeMirrorEditor = () => {
         /* Styling for line numbers */
         .CodeMirror-linenumber {
           border-radius: 15px !important; /* Rounded line numbers */
-          color: white !important; /* Color of line numbers */
-          text-align: center;
+          color: #FFFFFF4D !important; /* Color of line numbers */
+          text-align: center !important;
         }
         .CodeMirror-gutter {
           background-color: #333236;
-          display: flex;
+          text-align: center !important;
         }
       `}</style>
       <button className='absolute bottom-3 right-4 z-[9999999]' type='submit' onClick={handleSubmit}>Submit</button>
