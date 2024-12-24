@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Button from "./Button";
+import CodeMirrorEditor from "../CodeMirrorEditor";
 
 const Card = ({ imageSrc, imageAlt, title, description, children }) => {
   return (
@@ -22,6 +23,9 @@ const Card = ({ imageSrc, imageAlt, title, description, children }) => {
           <Button iconAlt="Help Icon" text="Help" isActive={false} />
         </div>
         </div>
+      </div>
+      <div className="mt-[2rem] mb-[2rem]">
+        <CodeMirrorEditor />
       </div>
     </div>
   );
