@@ -8,7 +8,8 @@ export const openAIService = {
       messages: [
         {
           role: "system",
-          content: `You are an assistant that verifies Python programs solving coding exercises. 
+          content: `You are an assistant that evaluates whether a Python program correctly solves a given coding puzzle. 
+          Respond only with "true" if the program is correct and "false" if it is not. Do not provide any additional explanation. 
           The puzzle is: '${question}`,
         },
         {

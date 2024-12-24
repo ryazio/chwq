@@ -2,7 +2,7 @@ import Image from "next/image";
 import Button from "./Button";
 import CodeMirrorEditor from "../CodeMirrorEditor";
 
-const Card = ({ imageSrc, imageAlt, title, description, children }) => {
+const Card = ({ imageSrc, imageAlt, title, description,updateLessons,selectedTab,categoryId,queId,Lessons, children }) => {
   return (
     <div className="px-4 md:px-8 py-2 bg-[#1E1E1E] rounded-[15px]">
       <div className="flex flex-row">
@@ -25,7 +25,7 @@ const Card = ({ imageSrc, imageAlt, title, description, children }) => {
         </div>
       </div>
       <div className="mt-[2rem] mb-[2rem]">
-        <CodeMirrorEditor />
+        <CodeMirrorEditor question={description} updateLessons={updateLessons} selectedTab={selectedTab} categoryId={categoryId} questionId={queId} Lessons={Lessons} />
       </div>
     </div>
   );
