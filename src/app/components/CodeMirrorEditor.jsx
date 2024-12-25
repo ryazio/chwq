@@ -14,6 +14,8 @@ const CodeMirrorEditor = ({
   categoryId,
   questionId,
   Lessons,
+  setSelectedCategory,
+  updateSelectedQuestion
 }) => {
   const editorRef = useRef(null);
   const [code, setCode] = useState(`// Write your code here\n\n\n\n\n\n\n\n\n`);
@@ -71,6 +73,46 @@ const CodeMirrorEditor = ({
     } finally {
       setShowResult(true);
       setIsLoading(false);
+    }
+  };
+
+  const handleNextQuestion = () => {
+    // Find current category
+    const currentCategory = Lessons[selectedTab].categories.find(
+      cat => cat.catid === categoryId
+    );
+
+    if (currentCategory) {
+      // Find current question index in the category's questions array
+      const currentQuestionIndex = currentCategory.questions.findIndex(q => q.id === questionId);
+      
+      // Look for the next unanswered question after the current one
+      const nextUnansweredQuestion = currentCategory.questions
+        .slice(currentQuestionIndex + 1)
+        .find(q => !q.status);
+
+      if (nextUnansweredQuestion) {
+        // There is another unanswered question in this category
+        console.log("Moving to next question in same category");
+        setShowResult(false);
+        setShowConfirmed(false);
+        setIsAnswerCorrect(null);
+        setCode(`// Write your code here\n\n\n\n\n\n\n\n\n`);
+        updateSelectedQuestion(nextUnansweredQuestion);  // Update the selected question
+      } else {
+        // Check if all questions in the category are answered
+        const allQuestionsAnswered = currentCategory.questions.every(q => q.status);
+        
+        if (allQuestionsAnswered && typeof setSelectedCategory === 'function') {
+          // Only return to category selection if all questions are answered
+          console.log("All questions complete, returning to category selection");
+          setSelectedCategory(null);
+          setShowResult(false);
+          setShowConfirmed(false);
+          setIsAnswerCorrect(null);
+          setCode(`// Write your code here\n\n\n\n\n\n\n\n\n`);
+        }
+      }
     }
   };
 
@@ -151,21 +193,27 @@ const CodeMirrorEditor = ({
             💪{" "}
           </div>
         ))}
-      {  showResult &&   isAnswerCorrect?  (<><div className="w-[100%] border-b-[1px] border-opacity-10 border-white mb-[1.5rem] mt-[5rem]"></div><div className="w-full flex justify-between items-center gap-3">
-        <div className="flex flex-col flex-1 px-2">
-          <span className="text-[13px] italic font-normal text-white mb-2">
-            Completed 1 out of 11 exercises. 10 more to go!
-          </span>
-          <ProgressBar progressPercentage={20} />
-        </div>
+      {showResult && isAnswerCorrect ? (
+        <>
+          <div className="w-[100%] border-b-[1px] border-opacity-10 border-white mb-[1.5rem] mt-[5rem]"></div>
+          <div className="w-full flex justify-between items-center gap-3">
+            <div className="flex flex-col flex-1 px-2">
+              <span className="text-[13px] italic font-normal text-white mb-2">
+                Completed 1 out of 11 exercises. 10 more to go!
+              </span>
+              <ProgressBar progressPercentage={20} />
+            </div>
 
-        <button
-          className="z-[9999999] flex items-center justify-center px-4 py-2 bg-[#FFCF4B] text-[#333333] text-[13px] font-semibold rounded-lg mt-1"
-          type="button"
-        >
-          Next
-        </button>
-      </div></>): null}
+            <button
+              className="z-[9999999] flex items-center justify-center px-4 py-2 bg-[#FFCF4B] text-[#333333] text-[13px] font-semibold rounded-lg mt-1"
+              type="button"
+              onClick={handleNextQuestion}
+            >
+              Next
+            </button>
+          </div>
+        </>
+      ) : null}
     </>
   );
 };

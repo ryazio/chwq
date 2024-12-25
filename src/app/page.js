@@ -109,6 +109,7 @@ export default function VerticalTabs() {
               selectedCategory={selectedCategory}
               image="/penguin_soldier.png"
               updateLessons={setLessons}
+              setSelectedCategory={setSelectedCategory}  
             />
           )}
         </div>
