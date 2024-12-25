@@ -64,19 +64,19 @@ export default function VerticalTabs() {
                 } ${!canEnableTab(lesson.index) ? "cursor-not-allowed opacity-50" : ""}`}
                 disabled={!canEnableTab(lesson.index)} // Disable button if previous lesson is not passed
               >
-                <div className="flex flex-row space-between">
+                <div className="flex flex-row justify-center gap-2 w-full">
                   {/* Show Danger if it's the current selected tab */}
                   {selectedTab === lesson.index && (lesson.passed ? "" : <Danger />)}
                   {/* Show GreenTick if passed, else Lock */}
                   {lesson.passed ? <GreenTick /> : <Lock />}
                   {lesson.title}
                 </div>
-                {/* Pill with spacing between lesson text */}
-                {index === 0 && (
+                {/* Pill when Lesson is complete */}
+                {/* {index === 0 && (
                   <span className="inline-block px-4 py-1 bg-[#EEFBE4] text-[#57C161] rounded-full text-xs ml-4 min-w-[67]">
                     100 %
                   </span>
-                )}
+                )} */}
               </button>
             ))}
           </div>
