@@ -96,7 +96,7 @@ export default function VerticalTabs() {
                     key={index}
                     onClick={() => setSelectedCategory(category)}
                   >
-                    <Question title={category.title} imageUrl={category.imageUrl} />
+                    <Question title={category.title} imageUrl={category.imageUrl} Lessons={Lessons} categoryId={category.catid} selectedTab={selectedTab} />
                   </span>
                 ))}
               </div>

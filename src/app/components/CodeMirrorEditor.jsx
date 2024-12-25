@@ -211,10 +211,21 @@ const CodeMirrorEditor = ({
           <div className="w-[100%] border-b-[1px] border-opacity-10 border-white mb-[1.5rem] mt-[5rem]"></div>
           <div className="w-full flex justify-between items-center gap-3">
             <div className="flex flex-col flex-1 px-2">
-              <span className="text-[13px] italic font-normal text-white mb-2">
+              {/* <span className="text-[13px] italic font-normal text-white mb-2">
                 Completed 1 out of 11 exercises. 10 more to go!
-              </span>
-              <ProgressBar progressPercentage={20} />
+              </span> */}
+              <ProgressBar 
+                totalQuestions={
+                  Lessons[selectedTab].categories.find(
+                    (cat) => cat.catid === categoryId
+                  )?.questions.length || 0
+                }
+                answeredQuestions={
+                  Lessons[selectedTab].categories
+                    .find((cat) => cat.catid === categoryId)
+                    ?.questions.filter((q) => q.status).length || 0
+                }
+              />
             </div>
 
             <button

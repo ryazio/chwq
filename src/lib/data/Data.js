@@ -12,14 +12,14 @@ const Lessons = {
             title: "List Mania! - Sorting the Fruits!",
             question:
               "Grandma has a basket full of fruits, but they're all mixed up! Can you help her sort them alphabetically using a Python program? Write a program to sort and display a list of fruits: ['Apple', 'Banana', 'Mango', 'Cherry'].",
-              status: false,
+              status: true,
           },
           {
             id: 2,
             title: "List Mania! - Find the Missing Numbers!",
             question:
               "Your friend lost a few pages of his favorite notebook. The page numbers he has are [1, 2, 4, 6, 7]. Can you write a Python program to identify the missing numbers from 1 to 7?",
-              status: false,
+              status: true,
             },
         ],
       },
@@ -33,7 +33,7 @@ const Lessons = {
             title: "Loopity Loops! - Multiplication Table Magic!",
             question:
               "Write a Python program that prints the multiplication table of 5 using a for loop. Can you make it look neat and organized?",
-              status: false,
+              status: true,
             },
           {
             id: 4,
