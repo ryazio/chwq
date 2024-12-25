@@ -64,7 +64,6 @@ const CodeMirrorEditor = ({
       const response = await openAIService.sendPrompt(code, question);
       if (response) {
         const isCorrect = response.toLowerCase() === "true"; // Convert string to boolean
-        alert(response);
         setIsAnswerCorrect(isCorrect);
         setShowConfirmed(true);
         updateSelectedTab(selectedTab, categoryId, questionId, isCorrect);
@@ -179,7 +178,7 @@ const CodeMirrorEditor = ({
               text-align: center !important;
             }
             .CodeMirror-vscrollbar {
-              overflow-y: hidden;
+              overflow-y: hidden !important;
             }
           `}</style>
           <button
