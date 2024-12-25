@@ -77,6 +77,13 @@ const CodeMirrorEditor = ({
     }
   };
 
+  const resetQuestion = () => {
+    setShowResult(false);
+    setShowConfirmed(false);
+    setIsAnswerCorrect(null);
+    setCode(`// Write your code here\n\n\n\n\n\n\n\n\n`);
+  };
+
   const handleNextQuestion = () => {
     // Find current category
     const currentCategory = Lessons[selectedTab].categories.find(
@@ -204,7 +211,15 @@ const CodeMirrorEditor = ({
           <div className="mt-2 px-4 py-2 bg-[#333236] rounded-[15px] text-[16px] font-normal w-full sm:w-8/12">
             Oops! 😅 There's a mistake in the code. Try again—you've got this!
             💪{" "}
+            <button
+              className="z-[9999999] flex items-center justify-center px-4 py-2 bg-[#FFCF4B] text-[#333333] text-[13px] font-semibold rounded-lg mt-1"
+              type="button"
+              onClick={resetQuestion}
+            >
+              Reset
+            </button>
           </div>
+          
         ))}
       {showResult && isAnswerCorrect ? (
         <>
