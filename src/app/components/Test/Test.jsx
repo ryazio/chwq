@@ -3,7 +3,16 @@ import CardComponet from "./CardComponent";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-const Test = ({ profileImage, image, selectedTab, Lessons, updateLessons, selectedCategory }) => {
+const Test = ({ 
+  profileImage, 
+  image, 
+  selectedTab, 
+  Lessons, 
+  updateLessons, 
+  selectedCategory, 
+  setSelectedCategory,
+  lessonName
+}) => {
   const [queSelected, setQueSelected] = useState(null);
 
   useEffect(() => {
@@ -12,25 +21,30 @@ const Test = ({ profileImage, image, selectedTab, Lessons, updateLessons, select
       cat => cat.catid === selectedCategory.catid
     );
     
-    if (currentCategory) {
+    if (currentCategory && !queSelected) {  // Only set if no question is selected
       // Find the first question with status: false in the updated category data
       const unansweredQuestion = currentCategory.questions.find(
         (question) => !question.status
       );
       
       if (unansweredQuestion) {
-        console.log("Found unanswered question:", unansweredQuestion);
+        console.log("Found first unanswered question:", unansweredQuestion);
         setQueSelected(unansweredQuestion);
       } else {
         console.log("No unanswered questions found");
         setQueSelected(false);
       }
     }
-  }, [selectedCategory, Lessons, selectedTab]);
+  }, [selectedCategory]); // Only depend on selectedCategory changes
+
+  // Add function to update selected question
+  const updateSelectedQuestion = (newQuestion) => {
+    setQueSelected(newQuestion);
+  };
 
   return (
     <div className="w-full">
-      <LessonHeader title="Lesson 2 / Loopity Loops" />
+      <LessonHeader title={lessonName} />
       <div className="flex flex-col mt-28 md:mt-0 text-white rounded-lg w-[100%]">
         {queSelected ? (
           <CardComponet
@@ -39,10 +53,12 @@ const Test = ({ profileImage, image, selectedTab, Lessons, updateLessons, select
             title={selectedCategory.title}
             categoryId={selectedCategory.catid}
             description={queSelected.question}
-            queId={queSelected.id} // Safely access question when queSelected is valid
+            queId={queSelected.id}
             selectedTab={selectedTab}
             updateLessons={updateLessons}
             Lessons={Lessons}
+            setSelectedCategory={setSelectedCategory}
+            updateSelectedQuestion={updateSelectedQuestion}  // Pass the function
           >
             <Image
               src={image}

@@ -64,17 +64,19 @@ export default function VerticalTabs() {
                 } ${!canEnableTab(lesson.index) ? "cursor-not-allowed opacity-50" : ""}`}
                 disabled={!canEnableTab(lesson.index)} // Disable button if previous lesson is not passed
               >
-                <div className="flex flex-row space-between">
-                  {/* Show Danger if it's the current selected tab */}
-                  {selectedTab === lesson.index && (lesson.passed ? "" : <Danger />)}
-                  {/* Show GreenTick if passed, else Lock */}
-                  {lesson.passed ? <GreenTick /> : <Lock />}
+                <div className="flex flex-row justify-start gap-2 w-full">
+                  {/* Show icons based on lesson state */}
+                  {selectedTab === lesson.index ? (
+                    !lesson.passed ? <Danger /> : <GreenTick />
+                  ) : (
+                    lesson.passed ? <GreenTick /> : <Lock />
+                  )}
                   {lesson.title}
                 </div>
-                {/* Pill with spacing between lesson text */}
-                {index === 0 && (
-                  <span className="inline-block px-4 py-1 bg-[#EEFBE4] text-[#57C161] rounded-full text-xs ml-4 min-w-[67]">
-                    100 %
+                {/* Pill when Lesson is complete */}
+                {lesson.passed && (
+                  <span className="inline-block px-4 py-1 bg-[#EEFBE4] text-[#57C161] rounded-full text-xs ml-4 min-w-[67px]">
+                    100%
                   </span>
                 )}
               </button>
@@ -96,7 +98,7 @@ export default function VerticalTabs() {
                     key={index}
                     onClick={() => setSelectedCategory(category)}
                   >
-                    <Question title={category.title} imageUrl={category.imageUrl} />
+                    <Question title={category.title} imageUrl={category.imageUrl} Lessons={Lessons} categoryId={category.catid} selectedTab={selectedTab} />
                   </span>
                 ))}
               </div>
@@ -109,6 +111,8 @@ export default function VerticalTabs() {
               selectedCategory={selectedCategory}
               image="/penguin_soldier.png"
               updateLessons={setLessons}
+              setSelectedCategory={setSelectedCategory}  
+              lessonName={`${lessons.find(lesson => lesson.index === selectedTab)?.title} / ${selectedCategory.title}`}
             />
           )}
         </div>
