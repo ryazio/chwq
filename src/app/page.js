@@ -112,6 +112,7 @@ export default function VerticalTabs() {
               image="/penguin_soldier.png"
               updateLessons={setLessons}
               setSelectedCategory={setSelectedCategory}  
+              lessonName={`${lessons.find(lesson => lesson.index === selectedTab)?.title} / ${selectedCategory.title}`}
             />
           )}
         </div>

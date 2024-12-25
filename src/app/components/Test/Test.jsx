@@ -10,7 +10,8 @@ const Test = ({
   Lessons, 
   updateLessons, 
   selectedCategory, 
-  setSelectedCategory 
+  setSelectedCategory,
+  lessonName
 }) => {
   const [queSelected, setQueSelected] = useState(null);
 
@@ -43,7 +44,7 @@ const Test = ({
 
   return (
     <div className="w-full">
-      <LessonHeader title="Lesson 2 / Loopity Loops" />
+      <LessonHeader title={lessonName} />
       <div className="flex flex-col mt-28 md:mt-0 text-white rounded-lg w-[100%]">
         {queSelected ? (
           <CardComponet
