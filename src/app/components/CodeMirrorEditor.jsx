@@ -23,6 +23,7 @@ const CodeMirrorEditor = ({
   const [showConfirmed, setShowConfirmed] = useState(false);
   const [isAnswerCorrect, setIsAnswerCorrect] = useState(null);
   const [showResult, setShowResult] = useState(false);
+  const [showCongrats, setShowCongrats] = useState(false);
 
   useEffect(() => {
     import("codemirror/lib/codemirror.css");
@@ -104,13 +105,17 @@ const CodeMirrorEditor = ({
         const allQuestionsAnswered = currentCategory.questions.every(q => q.status);
         
         if (allQuestionsAnswered && typeof setSelectedCategory === 'function') {
-          // Only return to category selection if all questions are answered
-          console.log("All questions complete, returning to category selection");
-          setSelectedCategory(null);
-          setShowResult(false);
-          setShowConfirmed(false);
-          setIsAnswerCorrect(null);
-          setCode(`// Write your code here\n\n\n\n\n\n\n\n\n`);
+          // Show congratulatory message before returning to category selection
+          setShowCongrats(true);
+          // Wait for 3 seconds before returning to category selection
+          setTimeout(() => {
+            setShowCongrats(false);
+            setSelectedCategory(null);
+            setShowResult(false);
+            setShowConfirmed(false);
+            setIsAnswerCorrect(null);
+            setCode(`// Write your code here\n\n\n\n\n\n\n\n\n`);
+          }, 3000);
         }
       }
     }
@@ -118,6 +123,14 @@ const CodeMirrorEditor = ({
 
   return (
     <>
+      {showCongrats && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-[#2D2D2D] p-8 rounded-lg shadow-xl text-center">
+            <h2 className="text-2xl font-bold text-green-500 mb-4">🎉 Congratulations! 🎉</h2>
+            <p className="text-white text-lg">You've completed all questions in this category!</p>
+          </div>
+        </div>
+      )}
       {isLoading ? (
         <div className="w-full flex justify-end">
           <LoadingStatus />
