@@ -69,7 +69,7 @@ const Test = ({
             />
           </CardComponet>
         ) : (
-          <div className="text-white">No questions left or all questions are answered!</div>
+          <div className="text-white text-[16px] font-[390] italic">All questions have been answered—there’s nothing left to address!</div>
         )}
       </div>
     </div>

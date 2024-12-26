@@ -88,10 +88,10 @@ export default function VerticalTabs() {
         <div className="flex-1 flex-col mt-28 md:mt-0 md:flex-row flex text-white rounded-lg max-w-screen-xl">
           {!selectedCategory ? (
             <div className="p-8 bg-[#1E1E1E] rounded-[15px] flex-1 w-full md:w-[60%] sm:w-[95%]">
-              <h1 className="text-2xl text-center font-bold mb-3">{`Categories for ${lessons.find(lesson => lesson.index === selectedTab)?.title}`}</h1>
+              <h1 className="text-2xl text-center font-bold mb-3">{`M11 ${lessons.find(lesson => lesson.index === selectedTab)?.title} - ${LessonsData[selectedTab]?.title}`}</h1>
               <div className="w-[100%] border-b-[1px] border-opacity-10 border-white mb-3"></div>
 
-              <div className="flex flex-row mb-6 justify-around flex-wrap items-center">
+              <div className="flex flex-row mb-6 justify-around gap-3 flex-wrap items-center">
                 {Lessons[selectedTab]?.categories.map((category, index) => (
                   <span
                     className="justify-self-center"
@@ -121,7 +121,7 @@ export default function VerticalTabs() {
         <div className="fixed top-0 left-0 right-0 bg-[#1E1E1E] py-4 px-6 md:hidden">
           <label
             htmlFor="lesson-dropdown"
-            className="text-white text-sm mb-2 block"
+            className="text-white text-sm mb-2 block text-[14px] font-semibold"
           >
             Select a Lesson:
           </label>
