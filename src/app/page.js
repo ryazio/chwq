@@ -52,7 +52,7 @@ export default function VerticalTabs() {
       <div className="flex flex-row lg:w-[65%]">
         {/* Sidebar with Vertical Tabs (only visible on larger screens) */}
         <div className="flex flex-row items-start">
-          <div className="bg-[#1E1E1E] text-white pt-[15px] pb-[15px] mr-[20px] rounded-[15px] w-full min-w-[15rem] md:w-[20%] hidden md:block">
+          <div className="bg-[#1E1E1E] text-white weight-[390] pt-[15px] pb-[15px] mr-[20px] rounded-[15px] w-full min-w-[15rem] md:w-[20%] hidden md:block">
             {lessons.map((lesson, index) => (
               <button
                 key={index}
@@ -91,7 +91,7 @@ export default function VerticalTabs() {
               <h1 className="text-2xl text-center font-bold mb-3">{`M11 ${lessons.find(lesson => lesson.index === selectedTab)?.title} - ${LessonsData[selectedTab]?.title}`}</h1>
               <div className="w-[100%] border-b-[1px] border-opacity-10 border-white mb-3"></div>
 
-              <div className="flex flex-row mb-6 justify-around gap-3 flex-wrap items-center">
+              <div className="flex flex-row mb-6 justify-around gap-3 flex-wrap items-center max-w-2xl ml-auto mr-auto">
                 {Lessons[selectedTab]?.categories.map((category, index) => (
                   <span
                     className="justify-self-center"
