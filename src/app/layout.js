@@ -1,30 +1,36 @@
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import './globals.css';
+import localFont from 'next/font/local';
 
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const brandon = localFont({
+  src: [
+    {
+      path: '../../public/fonts/BrandonGrotesque-Regular.otf',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/BrandonGrotesque-Medium.otf',
+      weight: '500',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/BrandonGrotesque-Bold.otf',
+      weight: '700',
+      style: 'normal',
+    }
+  ],
+  variable: '--font-brandon'
 });
 
 export const metadata = {
-  title: "CHWQ",
-  description: "Code Wizards Exercise",
+  title: 'Code with HQ',
+  description: 'Learn to code with HQ',
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black`}
-      >
-        {children}
-      </body>
+    <html lang="en" className={`${brandon.variable}`}>
+      <body className="font-sans antialiased bg-black">{children}</body>
     </html>
   );
 }
