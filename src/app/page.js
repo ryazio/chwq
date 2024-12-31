@@ -11,7 +11,9 @@ import Lock from "./components/Svg/Lock";
 export default function VerticalTabs() {
   const [Lessons, setLessons] = useState(LessonsData);
   const [selectedTab, setSelectedTab] = useState(1); // Default selected lesson
-  const [selectedCategory, setSelectedCategory] = useState(null); // Track selected category
+  const [selectedCategory, setSelectedCategory] = useState(
+    Lessons[selectedTab]?.categories[0]
+  ); // Track selected category
 
   // Dynamically generate lessons with passed status
   const lessons = Object.keys(Lessons).map((key) => {
@@ -25,7 +27,7 @@ export default function VerticalTabs() {
     return {
       title: `Lesson ${key}`,
       passed: isPassed,
-      index: parseInt(key),  // Use numeric index for selectedTab comparison
+      index: parseInt(key), // Use numeric index for selectedTab comparison
     };
   });
 
@@ -43,9 +45,10 @@ export default function VerticalTabs() {
   const handleTabChange = (lessonIndex) => {
     if (canEnableTab(lessonIndex)) {
       setSelectedTab(lessonIndex);
-      setSelectedCategory(null); // Reset selected category when switching lesson
+      setSelectedCategory(Lessons[lessonIndex]?.categories[0]); // Reset selected category when switching lesson
     }
   };
+  console.log(selectedCategory);
 
   return (
     <div className="h-max bg-black flex pt-10 gap-y-2.5 items-center justify-center mx-auto px-4">
@@ -56,20 +59,30 @@ export default function VerticalTabs() {
             {lessons.map((lesson, index) => (
               <button
                 key={index}
-                onClick={() => handleTabChange(lesson.index)}  // Handle tab change
+                onClick={() => handleTabChange(lesson.index)} // Handle tab change
                 className={`w-full py-4 px-6 text-left transition flex flex-row justify-between tab-button ${
                   selectedTab === lesson.index
                     ? "bg-white text-black font-bold"
                     : "bg-[#1E1E1E] hover:bg-gray-700"
-                } ${!canEnableTab(lesson.index) ? "cursor-not-allowed opacity-50" : ""}`}
+                } ${
+                  !canEnableTab(lesson.index)
+                    ? "cursor-not-allowed opacity-50"
+                    : ""
+                }`}
                 disabled={!canEnableTab(lesson.index)} // Disable button if previous lesson is not passed
               >
                 <div className="flex flex-row justify-start gap-2 w-full">
                   {/* Show icons based on lesson state */}
                   {selectedTab === lesson.index ? (
-                    !lesson.passed ? <Danger /> : <GreenTick />
+                    !lesson.passed ? (
+                      <Danger />
+                    ) : (
+                      <GreenTick />
+                    )
+                  ) : lesson.passed ? (
+                    <GreenTick />
                   ) : (
-                    lesson.passed ? <GreenTick /> : <Lock />
+                    <Lock />
                   )}
                   {lesson.title}
                 </div>
@@ -86,34 +99,20 @@ export default function VerticalTabs() {
 
         {/* Content Area */}
         <div className="flex-1 flex-col mt-28 md:mt-0 md:flex-row flex text-white rounded-lg max-w-screen-xl">
-          {!selectedCategory ? (
-            <div className="p-8 bg-[#1E1E1E] rounded-[15px] flex-1 w-full md:w-[60%] sm:w-[95%]">
-              <h1 className="text-2xl text-center font-bold mb-3">{`Categories for ${lessons.find(lesson => lesson.index === selectedTab)?.title}`}</h1>
-              <div className="w-[100%] border-b-[1px] border-opacity-10 border-white mb-3"></div>
-
-              <div className="flex flex-row mb-6 justify-around flex-wrap items-center">
-                {Lessons[selectedTab]?.categories.map((category, index) => (
-                  <span
-                    className="justify-self-center"
-                    key={index}
-                    onClick={() => setSelectedCategory(category)}
-                  >
-                    <Question title={category.title} imageUrl={category.imageUrl} Lessons={Lessons} categoryId={category.catid} selectedTab={selectedTab} />
-                  </span>
-                ))}
-              </div>
-            </div>
-          ) : (
-            <Test
-              profileImage="/strikerIcon.png"
-              selectedTab={selectedTab}
-              Lessons={Lessons}
-              selectedCategory={selectedCategory}
-              image="/penguin_soldier.png"
-              updateLessons={setLessons}
-              setSelectedCategory={setSelectedCategory}  
-              lessonName={`${lessons.find(lesson => lesson.index === selectedTab)?.title} / ${selectedCategory.title}`}
-            />
+          {lessons.map((lesson) =>
+            lesson.index == selectedTab ? (
+              <Test
+                profileImage="/strikerIcon.png"
+                selectedTab={selectedTab}
+                Lessons={Lessons}
+                selectedCategory={selectedCategory}
+                updateLessons={setLessons}
+                setSelectedCategory={setSelectedCategory}
+                lessonName={`${
+                  lessons.find((lesson) => lesson.index === selectedTab)?.title
+                }`}
+              />
+            ) : undefined
           )}
         </div>
 
@@ -128,7 +127,7 @@ export default function VerticalTabs() {
           <select
             id="lesson-dropdown"
             className="w-full bg-[#2D2D2D] text-white border-2 border-gray-700 rounded-lg py-2 px-4"
-            value={selectedTab}  // Use selectedTab as is, it should always be a number
+            value={selectedTab} // Use selectedTab as is, it should always be a number
             onChange={(e) => {
               const lessonIndex = Number(e.target.value);
               if (canEnableTab(lessonIndex)) {
@@ -138,7 +137,11 @@ export default function VerticalTabs() {
             }}
           >
             {lessons.map((lesson, index) => (
-              <option key={index} value={lesson.index} disabled={!canEnableTab(lesson.index)}>
+              <option
+                key={index}
+                value={lesson.index}
+                disabled={!canEnableTab(lesson.index)}
+              >
                 {lesson.title}
               </option>
             ))}

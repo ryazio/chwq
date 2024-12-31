@@ -92,7 +92,7 @@ const CodeMirrorEditor = ({
     if (currentCategory) {
       // Find current question index in the category's questions array
       const currentQuestionIndex = currentCategory.questions.findIndex(q => q.id === questionId);
-      
+
       // Look for the next unanswered question after the current one
       const nextUnansweredQuestion = currentCategory.questions
         .slice(currentQuestionIndex + 1)
@@ -109,31 +109,42 @@ const CodeMirrorEditor = ({
       } else {
         // Check if all questions in the category are answered
         const allQuestionsAnswered = currentCategory.questions.every(q => q.status);
-        
+
         if (allQuestionsAnswered && typeof setSelectedCategory === 'function') {
-          // Show congratulatory message before returning to category selection
-          setShowCongrats(true);
-          // Wait for 3 seconds before returning to category selection
-          setTimeout(() => {
-            setShowCongrats(false);
-            setSelectedCategory(null);
+
+          let nextCategory = Lessons[selectedTab].categories.find(
+            (cat) => cat.catid === categoryId + 1
+          );
+
+          if (nextCategory) {
+            setSelectedCategory(nextCategory);
+            updateSelectedQuestion(nextCategory.questions[0]);
             setShowResult(false);
             setShowConfirmed(false);
             setIsAnswerCorrect(null);
             setCode(`// Write your code here\n\n\n\n\n\n\n\n\n`);
-          }, 3000);
+
+          }
         }
       }
     }
   };
-
+  useEffect(() => {
+    let category = Lessons[selectedTab].categories;
+    if (category.every((category) => category.questions.every((question) => question.status == true))) {
+      setShowCongrats(true);
+    }
+    setTimeout(() => {
+      setShowCongrats(false);
+    }, 3000)
+  }, [Lessons, selectedTab, categoryId])
   return (
     <>
       {showCongrats && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-[#2D2D2D] p-8 rounded-lg shadow-xl text-center">
             <h2 className="text-2xl font-bold text-green-500 mb-4">🎉 Congratulations! 🎉</h2>
-            <p className="text-white text-lg">You've completed all questions in this category!</p>
+            <p className="text-white text-lg">You've completed all questions in this Lesson!</p>
           </div>
         </div>
       )}
@@ -218,7 +229,7 @@ const CodeMirrorEditor = ({
               Reset
             </button>
           </div>
-          
+
         ))}
       {showResult && isAnswerCorrect ? (
         <>
@@ -228,24 +239,21 @@ const CodeMirrorEditor = ({
               {/* <span className="text-[13px] italic font-normal text-white mb-2">
                 Completed 1 out of 11 exercises. 10 more to go!
               </span> */}
-              <ProgressBar 
+              <ProgressBar
                 totalQuestions={
-                  Lessons[selectedTab].categories.find(
-                    (cat) => cat.catid === categoryId
-                  )?.questions.length || 0
+                  Lessons[selectedTab].categories.reduce((total, noofquestion) => total + noofquestion.questions.length, 0)
                 }
                 answeredQuestions={
-                  Lessons[selectedTab].categories
-                    .find((cat) => cat.catid === categoryId)
-                    ?.questions.filter((q) => q.status).length || 0
+                  Lessons[selectedTab].categories.reduce((total, noofquestion) => total + noofquestion.questions.reduce((total, no) => total + (no.status == true ? 1 : 0), 0), 0)
                 }
               />
             </div>
 
             <button
-              className="z-[9999999] flex items-center justify-center px-4 py-2 bg-[#FFCF4B] text-[#333333] text-[13px] font-semibold rounded-lg mt-1"
+              className="z-[9999999] flex items-center justify-center px-4 py-2 bg-[#FFCF4B] text-[#333333] text-[13px] font-semibold rounded-lg mt-1 disabled:cursor-not-allowed"
               type="button"
               onClick={handleNextQuestion}
+              disabled={Lessons[selectedTab].categories.reduce((total, noofquestion) => total + noofquestion.questions.length, 0) == Lessons[selectedTab].categories.reduce((total, noofquestion) => total + noofquestion.questions.reduce((total, no) => total + (no.status == true ? 1 : 0), 0), 0) ? true : false}
             >
               Next
             </button>
